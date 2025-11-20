@@ -8,7 +8,7 @@ class ResponseGenerator:
     """
 
     def __init__(self):
-        self.API_KEY = os.getenv("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")
+        self.API_KEY = os.getenv("HF_API_KEY")
         self.MODEL = "BioMistral/BioMistral-7B"
 
         if not self.API_KEY:
