@@ -1,0 +1,77 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="false" level="WARNING" enabled_by_default="false">
+      <option name="ignoredPackages">
+        <list>
+          <option value="nltk" />
+          <option value="rank-bm25" />
+          <option value="numpy" />
+          <option value="fastapi" />
+          <option value="spacy" />
+          <option value="fitz" />
+          <option value="sentence-transformers" />
+          <option value="faiss-cpu" />
+          <option value="h11" />
+          <option value="pillow" />
+          <option value="pathlib" />
+          <option value="configparser" />
+          <option value="filelock" />
+          <option value="blis" />
+          <option value="requests" />
+          <option value="colorama" />
+          <option value="PyYAML" />
+          <option value="sniffio" />
+          <option value="cymem" />
+          <option value="torch" />
+          <option value="scipy" />
+          <option value="packaging" />
+          <option value="charset-normalizer" />
+          <option value="pytz" />
+          <option value="regex" />
+          <option value="threadpoolctl" />
+          <option value="mpmath" />
+          <option value="sympy" />
+          <option value="thinc" />
+          <option value="srsly" />
+          <option value="wasabi" />
+          <option value="weasel" />
+          <option value="click" />
+          <option value="tqdm" />
+          <option value="catalogue" />
+          <option value="configobj" />
+          <option value="Jinja2" />
+          <option value="pydantic" />
+          <option value="preshed" />
+          <option value="murmurhash" />
+          <option value="confection" />
+          <option value="pydot" />
+          <option value="networkx" />
+          <option value="urllib3" />
+          <option value="fsspec" />
+          <option value="MarkupSafe" />
+          <option value="joblib" />
+          <option value="cloudpathlib" />
+          <option value="certifi" />
+          <option value="starlette" />
+          <option value="anyio" />
+          <option value="scikit-learn" />
+          <option value="pandas" />
+          <option value="uvicorn" />
+          <option value="annotated-types" />
+          <option value="idna" />
+          <option value="simplejson" />
+          <option value="itsdangerous" />
+          <option value="smart_open" />
+          <option value="wrapt" />
+          <option value="tokenizers" />
+          <option value="safetensors" />
+          <option value="spacy-legacy" />
+          <option value="transformers" />
+          <option value="huggingface-hub" />
+          <option value="spacy-loggers" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

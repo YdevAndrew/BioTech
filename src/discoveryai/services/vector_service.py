@@ -1,17 +1,21 @@
 import numpy as np
 from discoveryai.vectorstore.faiss_store import FaissStore
 from discoveryai.embeddings.embedder import Embedder
+from discoveryai.nlp.reranker import Reranker
+from discoveryai.generation.response_generator import ResponseGenerator
+
+
 
 
 class VectorService:
-    def __init__(self, dim=384, store_path="data/faiss"):
-        """
-        Serviços de vetorização + FAISS.
-        dim = dimensão do embedding (Seu modelo atual usa 384)
-        """
+    def __init__(self, dim=768, store_path="data/faiss"):
         self.embedder = Embedder()
         self.store = FaissStore(dim)
+        self.reranker = Reranker()
+        self.generator = ResponseGenerator()
         self.store_path = store_path
+
+
 
     # ---------------------------------------------------------
     # INDEXAÇÃO COMPLETA
@@ -25,6 +29,25 @@ class VectorService:
     #     }
     # }
     # ---------------------------------------------------------
+
+    def ask(self, query, k=5, rerank_k=20):
+        """
+        Pipeline completo de RAG:
+        FAISS -> Reranking -> Geração de resposta
+        """
+
+        # 1. busca vetorial + reranking
+        context = self.semantic_search(query, k=k, rerank_k=rerank_k)
+
+        # 2. gerar resposta
+        answer = self.generator.generate(query, context)
+
+        return {
+            "query": query,
+            "answer": answer,
+            "context": context
+        }
+
     def index_chunks(self, chunks):
         texts = [c["text"] for c in chunks]
         metadata = [c["metadata"] for c in chunks]
@@ -46,14 +69,21 @@ class VectorService:
     # ---------------------------------------------------------
     # CONSULTA SEMÂNTICA
     # ---------------------------------------------------------
-    def semantic_search(self, query, k=5, filters=None):
-        vec = self.embedder.encode([query])
+    def semantic_search(self, query, k=5, rerank_k=20):
+        """
+        k = resultados finais
+        rerank_k = quantos pegar do FAISS antes do rerank
+        """
+        vec = self.embedder.embed([query])
 
-        # garantir float32
-        if vec.dtype != np.float32:
-            vec = vec.astype("float32")
+        # busca bruta primeiro
+        faiss_results = self.store.search(vec, k=rerank_k)
 
-        return self.store.search(vec, k=k, filters=filters)
+        # reranking com cross-encoder
+        ranked = self.reranker.rerank(query, faiss_results, k=k)
+
+        return ranked
+
 
     # ---------------------------------------------------------
     # RECARREGAR ARMAZENAMENTO FAISS
